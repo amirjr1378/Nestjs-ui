@@ -8,6 +8,7 @@ import { getMyInfo } from './services/user';
 import { BookOutlined, LinkOutlined } from '@ant-design/icons';
 import { getTokenFromLocalStorage, removeTokenFromLocalStorage } from './services/user';
 import { addTokenInterceptor } from './services/request';
+import type { UserType } from './types';
 
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
@@ -24,8 +25,8 @@ export const initialStateConfig = {
  * */
 export async function getInitialState(): Promise<{
   settings?: Partial<LayoutSettings>;
-  currentUser?: API.CurrentUser;
-  fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
+  currentUser?: UserType;
+  fetchUserInfo?: () => Promise<UserType | undefined>;
 }> {
   const token = getTokenFromLocalStorage();
   if (token) addTokenInterceptor(token);
