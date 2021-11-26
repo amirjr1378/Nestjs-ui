@@ -59,7 +59,7 @@ export default defineConfig({
     },
   ],
   nodeModulesTransform: { type: 'none' },
-  mfsu: {},
+  mfsu: {}, // if you have problem adding new packages just remove src/.umi file and restart server
   webpack5: {},
   exportStatic: {},
 });
