@@ -52,16 +52,10 @@ export default defineConfig({
   fastRefresh: {},
   openAPI: [
     {
-      requestLibPath: "import { request } from 'umi'",
-      // 或者使用在线的版本
-      // schemaPath: "https://gw.alipayobjects.com/os/antfincdn/M%24jrzTTYJN/oneapi.json"
-      schemaPath: join(__dirname, 'oneapi.json'),
-      mock: false,
-    },
-    {
-      requestLibPath: "import { request } from 'umi'",
-      schemaPath: 'https://gw.alipayobjects.com/os/antfincdn/CA1dOm%2631B/openapi.json',
+      requestLibPath: "import request from '@/services/request'",
+      schemaPath: 'https://api-dev.topdoc.ir/v1/options/swagger',
       projectName: 'swagger',
+      mock: false,
     },
   ],
   nodeModulesTransform: { type: 'none' },
