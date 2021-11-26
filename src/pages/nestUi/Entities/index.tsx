@@ -20,7 +20,7 @@ const NestJsEntitiesList = () => {
     [searchKeyWord, entities?.length],
   );
 
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = debounce((e) => {
+  const handleSearch: React.ChangeEventHandler<HTMLInputElement> = debounce((e) => {
     setSearchKeyWord(e.target.value);
   }, 300);
 
@@ -35,7 +35,7 @@ const NestJsEntitiesList = () => {
     <PageContainer>
       <Card
         className={s.cardContainer}
-        title={<Input.Search placeholder="جستجو" onChange={handleChange} />}
+        title={<Input.Search placeholder="جستجو" onChange={handleSearch} />}
       >
         <List
           dataSource={listDataSource}
@@ -44,7 +44,7 @@ const NestJsEntitiesList = () => {
             <List.Item
               className={s.listItem}
               key={item.name}
-              onClick={() => history.push(`/admin/entities/${item.name}`)}
+              onClick={() => history.push(`/admin/entities/records/${item.name}`)}
             >
               {item.name}
             </List.Item>
