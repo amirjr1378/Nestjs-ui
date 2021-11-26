@@ -33,6 +33,13 @@
     hideInMenu: true,
   },
   {
+    exact: true,
+    path: '/admin/entities/records/:name/:id',
+    name: 'ویرایش اطلاعات',
+    component: './nestUi/EntityRecord',
+    hideInMenu: true,
+  },
+  {
     component: './404',
   },
 ];

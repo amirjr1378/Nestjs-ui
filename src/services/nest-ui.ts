@@ -10,3 +10,14 @@ export const fetchEntityRecords = (entityName: string) =>
     ...res,
     total: res.total,
   }));
+
+export const fetchOneEntityRecord = ({
+  entityName,
+  entityID,
+}: {
+  entityName: string;
+  entityID: number;
+}) => request.get(`/v1/nestjs-ui/records/${entityID}?entity=${entityName}`);
+
+export const fetchOneEntityRecordProperties = (entityName: string) =>
+  request.get(`/v1/nestjs-ui/entity-properties/${entityName}`);
