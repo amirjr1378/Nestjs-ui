@@ -26,6 +26,13 @@
     component: './nestUi/Entities',
   },
   {
+    exact: true,
+    path: '/admin/entities/records/:name',
+    name: 'داده ها',
+    component: './nestUi/EntityRecords',
+    hideInMenu: true,
+  },
+  {
     component: './404',
   },
 ];
