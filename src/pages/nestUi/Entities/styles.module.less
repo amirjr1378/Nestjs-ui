@@ -1,0 +1,20 @@
+.cardContainer {
+  width: 600px;
+  height: 600px;
+  margin: auto;
+  overflow-y: hidden;
+  :global {
+    .ant-card-body {
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+    }
+  }
+  .listItem {
+    padding-right: 10px;
+    cursor: pointer;
+    &:hover {
+      background: #eee;
+    }
+  }
+}

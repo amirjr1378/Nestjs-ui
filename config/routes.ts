@@ -19,16 +19,11 @@
     ],
   },
   {
-    path: '/admin',
-    name: 'admin',
+    path: '/admin/entities',
+    name: 'تیبل ها',
     icon: 'crown',
     access: 'canAdmin',
-    component: './Admin',
-    routes: [
-      {
-        component: './404',
-      },
-    ],
+    component: './nestUi/Entities',
   },
   {
     component: './404',
