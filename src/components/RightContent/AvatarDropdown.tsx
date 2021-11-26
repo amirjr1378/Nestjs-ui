@@ -6,6 +6,8 @@ import { stringify } from 'querystring';
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
 import type { MenuInfo } from 'rc-menu/lib/interface';
+import { getMediaUrl } from '@/utils';
+import { removeTokenFromLocalStorage } from '@/services/user';
 
 export type GlobalHeaderRightProps = {
   menu?: boolean;
@@ -35,7 +37,8 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
     (event: MenuInfo) => {
       const { key } = event;
       if (key === 'logout') {
-        setInitialState((s) => ({ ...s, currentUser: undefined }));
+        removeTokenFromLocalStorage();
+        setInitialState({ ...initialState, currentUser: undefined });
         loginOut();
         return;
       }
@@ -56,15 +59,11 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
     </span>
   );
 
-  if (!initialState) {
+  if (!initialState?.currentUser) {
     return loading;
   }
 
   const { currentUser } = initialState;
-
-  if (!currentUser || !currentUser.name) {
-    return loading;
-  }
 
   const menuHeaderDropdown = (
     <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
@@ -84,15 +83,20 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 
       <Menu.Item key="logout">
         <LogoutOutlined />
-        退出登录
+        خروج از سایت
       </Menu.Item>
     </Menu>
   );
   return (
     <HeaderDropdown overlay={menuHeaderDropdown}>
       <span className={`${styles.action} ${styles.account}`}>
-        <Avatar size="small" className={styles.avatar} src={currentUser.avatar} alt="avatar" />
-        <span className={`${styles.name} anticon`}>{currentUser.name}</span>
+        <Avatar
+          size="small"
+          className={styles.avatar}
+          src={getMediaUrl(currentUser.avatar.url)}
+          alt="avatar"
+        />
+        <span className={`${styles.name} anticon`}>{currentUser.displayName}</span>
       </span>
     </HeaderDropdown>
   );
