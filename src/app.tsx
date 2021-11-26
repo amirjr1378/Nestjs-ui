@@ -1,13 +1,18 @@
 import type { Settings as LayoutSettings } from '@ant-design/pro-layout';
 import { PageLoading } from '@ant-design/pro-layout';
 import type { RunTimeLayoutConfig } from 'umi';
+import { setLocale } from 'umi';
 import { history, Link } from 'umi';
 import RightContent from '@/components/RightContent';
-import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
+import { getMyInfo } from './services/user';
 import { BookOutlined, LinkOutlined } from '@ant-design/icons';
+import { getTokenFromLocalStorage, removeTokenFromLocalStorage } from './services/user';
+import { addTokenInterceptor } from './services/request';
 
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
+
+setLocale('fa-IR');
 
 /** 获取用户信息比较慢的时候会展示一个 loading */
 export const initialStateConfig = {
@@ -22,12 +27,19 @@ export async function getInitialState(): Promise<{
   currentUser?: API.CurrentUser;
   fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
 }> {
+  const token = getTokenFromLocalStorage();
+  if (token) addTokenInterceptor(token);
+
   const fetchUserInfo = async () => {
     try {
-      const msg = await queryCurrentUser();
-      return msg.data;
+      if (!token) throw new Error('token is not provided');
+      const currentUser = await getMyInfo().catch(() => {
+        removeTokenFromLocalStorage();
+        addTokenInterceptor(null);
+      });
+      return currentUser;
     } catch (error) {
-      history.push(loginPath);
+      history.push('/user/login');
     }
     return undefined;
   };
@@ -56,9 +68,9 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
     },
     onPageChange: () => {
       const { location } = history;
-      // 如果没有登录，重定向到 login
-      if (!initialState?.currentUser && location.pathname !== loginPath) {
-        history.push(loginPath);
+      const token = getTokenFromLocalStorage();
+      if (!token && location.pathname !== loginPath) {
+        history.push('/user/login');
       }
     },
     links: isDev
