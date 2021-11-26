@@ -1,7 +1,7 @@
 import { createRequestForProTable } from './common';
 import request from './request';
 
-export function getEntities() {
+export function fetchEntities() {
   return request.get('/v1/nestjs-ui/entities');
 }
 

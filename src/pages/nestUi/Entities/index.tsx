@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { getEntities } from '@/services/nest-ui';
+import { fetchEntities } from '@/services/nest-ui';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Card, List, Input } from 'antd';
 import s from './styles.module.less';
@@ -26,7 +26,7 @@ const NestJsEntitiesList = () => {
 
   useEffect(() => {
     setLoading(true);
-    getEntities()
+    fetchEntities()
       .then(setEntities)
       .finally(() => setLoading(false));
   }, []);
